@@ -1,0 +1,40 @@
+// Add this to the end of issueController.js before the export
+
+// @desc    Toggle upvote on an issue
+// @route   POST /api/issues/:id/upvote
+// @access  Private (Students only)
+export const toggleUpvote = async (req, res) => {
+    try {
+        const issue = await Issue.findById(req.params.id);
+
+        if (!issue) {
+            return res.status(404).json({ message: 'Issue not found' });
+        }
+
+        // Check if user already upvoted
+        const hasUpvoted = issue.upvotes.some(
+            (userId) => userId.toString() === req.user._id.toString()
+        );
+
+        if (hasUpvoted) {
+            // Remove upvote
+            issue.upvotes = issue.upvotes.filter(
+                (userId) => userId.toString() !== req.user._id.toString()
+            );
+        } else {
+            // Add upvote
+            issue.upvotes.push(req.user._id);
+        }
+
+        await issue.save();
+
+        res.json({
+            success: true,
+            upvoteCount: issue.upvotes.length,
+            hasUpvoted: !hasUpvoted,
+        });
+    } catch (error) {
+        console.error('Toggle upvote error:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};

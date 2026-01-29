@@ -1,0 +1,47 @@
+// Add this function right before getMyIssues in issueController.js
+
+// @desc    Browse all public issues (for community viewing)
+// @route   GET /api/issues/browse
+// @access  Private (All authenticated users)
+export const browseAllIssues = async (req, res) => {
+    try {
+        const { status, category, severity, building, sort = '-createdAt', search } = req.query;
+
+        // Build filter
+        const filter = {};
+        if (status) filter.status = status;
+        if (category) filter.category = category;
+        if (severity) filter.severity = severity;
+        if (building) filter['location.building'] = building;
+        
+        // Add search filter
+        if (search) {
+            filter.$or = [
+                { title: { $regex: search, $options: 'i' } },
+                { description: { $regex: search, $options: 'i' } },
+            ];
+        }
+
+        let sortObj = {};
+        if (sort && sort !== 'upvotes' && sort !== '-upvotes') {
+            sortObj[sort.replace('-', '')] = sort.startsWith('-') ? -1 : 1;
+        }
+
+        const issues = await Issue.find(filter)
+            .populate('reportedBy', 'name studentId department')
+            .populate('assignedTo', 'name')
+            .sort(sort === 'upvotes' || sort === '-upvotes' ? {} : sortObj);
+
+        // Sort by upvotes if requested
+        if (sort === '-upvotes') {
+            issues.sort((a, b) => (b.upvotes?.length || 0) - (a.upvotes?.length || 0));
+        } else if (sort === 'upvotes') {
+            issues.sort((a, b) => (a.upvotes?.length || 0) - (b.upvotes?.length || 0));
+        }
+
+        res.json(issues);
+    } catch (error) {
+        console.error('Browse issues error:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};

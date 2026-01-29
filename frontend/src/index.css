@@ -1,0 +1,588 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply min-h-screen font-sans transition-colors duration-300;
+        font-family: 'Inter', sans-serif;
+        background-attachment: fixed;
+    }
+
+    /* Dark Theme (Default) */
+    .dark body {
+        @apply bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 text-gray-100;
+    }
+
+    /* Light Theme */
+    .light body {
+        @apply bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-gray-900;
+    }
+}
+
+@layer components {
+
+    /* Glass Morphism Card */
+    .dark .glass-card {
+        @apply bg-slate-800/40 backdrop-blur-lg border border-slate-700/50 shadow-2xl rounded-2xl;
+    }
+
+    .light .glass-card {
+        @apply bg-white/80 backdrop-blur-lg border border-white/20 shadow-xl rounded-2xl;
+    }
+
+    /* Gradient Button */
+    .btn-gradient {
+        @apply bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 active:scale-95;
+    }
+
+    /* Secondary Button */
+    .dark .btn-secondary {
+        @apply bg-slate-700 hover:bg-slate-600 text-gray-100 font-semibold py-3 px-6 rounded-xl border-2 border-slate-600 hover:border-slate-500 shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95;
+    }
+
+    .light .btn-secondary {
+        @apply bg-white hover:bg-gray-50 text-gray-700 font-semibold py-3 px-6 rounded-xl border-2 border-gray-200 hover:border-gray-300 shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95;
+    }
+
+    /* Input Field */
+    .dark .input-field {
+        @apply w-full py-3 rounded-xl border-2 border-slate-600 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 bg-slate-800/50 backdrop-blur-sm placeholder:text-gray-500 text-gray-100;
+    }
+
+    .light .input-field {
+        @apply w-full py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 bg-white/50 backdrop-blur-sm placeholder:text-gray-400 text-gray-900;
+    }
+
+    /* Badge */
+    .badge {
+        @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+    }
+
+    /* Severity Badges - Dark */
+    .dark .severity-low {
+        @apply badge bg-green-900/50 text-green-300 border border-green-700;
+    }
+
+    .dark .severity-medium {
+        @apply badge bg-yellow-900/50 text-yellow-300 border border-yellow-700;
+    }
+
+    .dark .severity-high {
+        @apply badge bg-orange-900/50 text-orange-300 border border-orange-700;
+    }
+
+    .dark .severity-critical {
+        @apply badge bg-red-900/50 text-red-300 border border-red-700;
+    }
+
+    /* Severity Badges - Light */
+    .light .severity-low {
+        @apply badge bg-green-100 text-green-800;
+    }
+
+    .light .severity-medium {
+        @apply badge bg-yellow-100 text-yellow-800;
+    }
+
+    .light .severity-high {
+        @apply badge bg-orange-100 text-orange-800;
+    }
+
+    .light .severity-critical {
+        @apply badge bg-red-100 text-red-800;
+    }
+
+    /* Status Badges - Dark */
+    .dark .status-pending {
+        @apply badge bg-gray-800/50 text-gray-300 border border-gray-600;
+    }
+
+    .dark .status-in-progress {
+        @apply badge bg-blue-900/50 text-blue-300 border border-blue-700;
+    }
+
+    .dark .status-resolved {
+        @apply badge bg-green-900/50 text-green-300 border border-green-700;
+    }
+
+    .dark .status-rejected {
+        @apply badge bg-red-900/50 text-red-300 border border-red-700;
+    }
+
+    /* Status Badges - Light */
+    .light .status-pending {
+        @apply badge bg-gray-100 text-gray-800;
+    }
+
+    .light .status-in-progress {
+        @apply badge bg-blue-100 text-blue-800;
+    }
+
+    .light .status-resolved {
+        @apply badge bg-green-100 text-green-800;
+    }
+
+    .light .status-rejected {
+        @apply badge bg-red-100 text-red-800;
+    }
+
+    /* Card Hover Effect */
+    .dark .card-hover {
+        @apply transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1;
+    }
+
+    .light .card-hover {
+        @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
+    }
+
+    /* Skeleton Loader */
+    .dark .skeleton {
+        @apply animate-pulse bg-slate-700 rounded;
+    }
+
+    .light .skeleton {
+        @apply animate-pulse bg-gray-200 rounded;
+    }
+
+    /* Page Container */
+    .page-container {
+        @apply container mx-auto px-4 py-8 max-w-7xl;
+        padding-top: 2rem; /* Add top padding to prevent navbar overlap */
+    }
+
+    /* Section Title */
+    .dark .section-title {
+        @apply text-3xl font-bold text-gray-100 mb-6 bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent;
+    }
+
+    .light .section-title {
+        @apply text-3xl font-bold text-gray-800 mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent;
+    }
+}
+
+@layer utilities {
+
+    /* Custom Scrollbar - Dark */
+    .dark .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .dark .custom-scrollbar::-webkit-scrollbar-track {
+        @apply bg-slate-800 rounded-full;
+    }
+
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+        @apply bg-gradient-to-b from-blue-500 to-indigo-500 rounded-full;
+    }
+
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        @apply from-blue-600 to-indigo-600;
+    }
+
+    /* Custom Scrollbar - Light */
+    .light .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .light .custom-scrollbar::-webkit-scrollbar-track {
+        @apply bg-gray-100 rounded-full;
+    }
+
+    .light .custom-scrollbar::-webkit-scrollbar-thumb {
+        @apply bg-gradient-to-b from-blue-500 to-indigo-500 rounded-full;
+    }
+
+    .light .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        @apply from-blue-600 to-indigo-600;
+    }
+
+    /* Smooth Transitions */
+    .smooth-transition {
+        @apply transition-all duration-300 ease-in-out;
+    }
+}
+
+/* Custom Animations */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.dark .shimmer {
+    animation: shimmer 2s infinite;
+    background: linear-gradient(to right, #1e293b 0%, #334155 20%, #1e293b 40%, #1e293b 100%);
+    background-size: 1000px 100%;
+}
+
+.light .shimmer {
+    animation: shimmer 2s infinite;
+    background: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+    background-size: 1000px 100%;
+}
+
+/* Gradient Text - Neon */
+.dark .gradient-text {
+    @apply bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent;
+}
+
+.light .gradient-text {
+    @apply bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent;
+}
+
+/* Blob Animation */
+@keyframes blob {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(30px, -50px) scale(1.1);
+    }
+
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+}
+
+.animate-blob {
+    animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+    animation-delay: 4s;
+}
+
+/* Particle Styles */
+.particles-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: float 20s infinite ease-in-out;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100vh) translateX(100px);
+        opacity: 0;
+    }
+}
+
+/* Leaflet Map Custom Styles */
+.leaflet-container {
+    font-family: 'Inter', sans-serif;
+    z-index: 0;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 12px;
+    padding: 0;
+}
+
+.leaflet-popup-content {
+    margin: 0;
+    min-width: 250px;
+}
+
+.dark .leaflet-popup-content-wrapper,
+.dark .leaflet-popup-tip {
+    background-color: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(10px);
+    color: #f1f5f9;
+}
+
+.light .leaflet-popup-content-wrapper,
+.light .leaflet-popup-tip {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    color: #1e293b;
+}
+
+.leaflet-popup-close-button {
+    color: #64748b !important;
+    font-size: 20px !important;
+    padding: 4px 8px !important;
+}
+
+.leaflet-popup-close-button:hover {
+    color: #3b82f6 !important;
+}
+
+/* Custom marker animations */
+.custom-marker .marker-pin {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.custom-marker .marker-pin:hover {
+    transform: rotate(-45deg) scale(1.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: rotate(-45deg) translateY(0);
+    }
+
+    50% {
+        transform: rotate(-45deg) translateY(-10px);
+    }
+}
+
+/* Marker cluster styles */
+.marker-cluster-small,
+.marker-cluster-medium,
+.marker-cluster-large {
+    background-color: rgba(59, 130, 246, 0.6);
+}
+
+.marker-cluster-small div,
+.marker-cluster-medium div,
+.marker-cluster-large div {
+    background-color: rgba(37, 99, 235, 0.6);
+    color: white;
+    font-weight: 600;
+}
+
+.dark .marker-cluster-small,
+.dark .marker-cluster-medium,
+.dark .marker-cluster-large {
+    background-color: rgba(59, 130, 246, 0.5);
+}
+
+.dark .marker-cluster-small div,
+.dark .marker-cluster-medium div,
+.dark .marker-cluster-large div {
+    background-color: rgba(37, 99, 235, 0.7);
+}
+
+/* Map control buttons */
+.dark .leaflet-control-zoom a {
+    background-color: rgba(30, 41, 59, 0.9);
+    border-color: rgba(71, 85, 105, 0.5);
+    color: #f1f5f9;
+}
+
+.dark .leaflet-control-zoom a:hover {
+    background-color: rgba(51, 65, 85, 0.9);
+    border-color: rgba(100, 116, 139, 0.5);
+}
+
+.light .leaflet-control-zoom a {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-color: rgba(226, 232, 240, 0.8);
+}
+
+.light .leaflet-control-zoom a:hover {
+    background-color: rgba(248, 250, 252, 1);
+}
+
+/* Page Transition Animations */
+.page-transition {
+    animation-duration: 0.3s;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-transition.fadeIn {
+    animation-name: fadeInUp;
+}
+
+.page-transition.fadeOut {
+    animation-name: fadeOutDown;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOutDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Enhanced Button Hover Effects */
+button:not(:disabled) {
+    @apply transition-all duration-300 cursor-pointer;
+}
+
+button:not(:disabled):hover {
+    @apply transform scale-105;
+}
+
+button:not(:disabled):active {
+    @apply transform scale-95;
+}
+
+/* Icon Button Effects */
+button.p-2:hover, button.p-3:hover {
+    @apply bg-opacity-90;
+}
+
+/* Glow effect for primary buttons */
+.btn-gradient:hover {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5), 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Submit button special hover */
+button[type="submit"]:hover {
+    @apply shadow-2xl;
+}
+
+/* Link buttons */
+button.text-blue-600:hover, button.text-blue-500:hover {
+    @apply underline decoration-2;
+}
+
+/* Card Hover Effects - Lift and Glow */
+.glass-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+    transform: translateY(-4px) scale(1.01);
+}
+
+.dark .glass-card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 
+                0 10px 10px -5px rgba(0, 0, 0, 0.2),
+                0 0 30px rgba(59, 130, 246, 0.3);
+}
+
+.light .glass-card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 
+                0 10px 10px -5px rgba(0, 0, 0, 0.04),
+                0 0 30px rgba(59, 130, 246, 0.2);
+}
+
+/* Button Pulse Animation on Click */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+button:active:not(:disabled) {
+    animation: pulse 0.3s ease-in-out;
+}
+
+/* Enhanced pulse for primary buttons */
+.btn-gradient:active {
+    animation: pulse 0.3s ease-in-out, glow-pulse 0.3s ease-in-out;
+}
+
+@keyframes glow-pulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
+    }
+}
+
+/* Issue Card Specific Effects */
+[class*="IssueCard"]:hover,
+.issue-card:hover {
+    cursor: pointer;
+}
+
+/* Ripple Effect for Buttons */
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+button {
+    position: relative;
+    overflow: hidden;
+}
+
+button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+button:active::after {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+    transition: 0s;
+}
