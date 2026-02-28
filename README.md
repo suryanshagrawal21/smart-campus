@@ -121,4 +121,5 @@ MIT
 
 ## 👨‍💻 Developer
 
+**Suryansh Agrawal**  
 Built with ❤️ for making campus life better

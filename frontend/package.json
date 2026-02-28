@@ -1,6 +1,7 @@
 {
     "name": "campus-issues-frontend",
     "version": "1.0.0",
+    "author": "Suryansh Agrawal",
     "type": "module",
     "scripts": {
         "dev": "vite",
