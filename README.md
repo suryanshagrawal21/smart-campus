@@ -33,11 +33,28 @@ A modern, full-stack web application for managing campus facility issues with in
 ```
 Campus issues project/
 ├── backend/          # Node.js API server
-├── frontend/         # React application
+├── frontend/         # React application (Vite)
+├── api/              # Vercel Serverless Function entry point
+├── vercel.json       # Vercel configuration
 └── README.md
 ```
 
-## 🚀 Quick Start
+## 🚀 Deployment
+
+### Deploy to Vercel
+
+This project is optimized for Vercel deployment.
+
+1.  **Push to GitHub**: Ensure your code is in a GitHub repository.
+2.  **Import to Vercel**: Connect your repository to Vercel.
+3.  **Environment Variables**: Add the following in the Vercel Dashboard:
+    - `MONGODB_URI`
+    - `JWT_SECRET`
+    - `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`
+    - `NODE_ENV=production`
+4.  **Deploy**: Vercel will automatically handle the build and routing.
+
+## 🚀 Local Quick Start
 
 ### Prerequisites
 - Node.js (v16 or higher)
