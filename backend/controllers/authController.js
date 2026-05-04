@@ -1,5 +1,6 @@
 import User from '../models/User.js';
 import { generateToken } from '../middleware/auth.js';
+import { sendEmail, welcomeEmailTemplate, loginAlertEmailTemplate } from '../utils/emailService.js';
 
 // @desc    Register a new user
 // @route   POST /api/auth/register
@@ -26,6 +27,13 @@ export const register = async (req, res) => {
         });
 
         if (user) {
+            // Send welcome email (non-blocking)
+            sendEmail({
+                to: user.email,
+                subject: '🎓 Welcome to Smart Campus!',
+                html: welcomeEmailTemplate(user.name),
+            });
+
             res.status(201).json({
                 _id: user._id,
                 name: user.name,
@@ -52,6 +60,19 @@ export const login = async (req, res) => {
         const user = await User.findOne({ email }).select('+password');
 
         if (user && (await user.comparePassword(password))) {
+            // Send login alert email (non-blocking)
+            const timestamp = new Date().toLocaleString('en-IN', {
+                timeZone: 'Asia/Kolkata',
+                dateStyle: 'full',
+                timeStyle: 'short',
+            });
+
+            sendEmail({
+                to: user.email,
+                subject: '🔐 New Login to Your Smart Campus Account',
+                html: loginAlertEmailTemplate(user.name, timestamp),
+            });
+
             res.json({
                 _id: user._id,
                 name: user.name,
