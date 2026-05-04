@@ -2,9 +2,7 @@
   "name": "campus-issues-project",
   "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "build": "cd frontend && npm install && npm run build"
-  },
+  "scripts": {},
   "devDependencies": {
     "autoprefixer": "^10.4.23",
     "postcss": "^8.5.6",
