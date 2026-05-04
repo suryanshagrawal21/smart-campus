@@ -2,15 +2,30 @@
 
 A modern, full-stack web application for managing campus facility issues with intelligent prioritization, role-based access, and real-time analytics.
 
+## 🌐 Live Demo
+
+> **Frontend (Vercel):** [https://smart-campus-zbhp.vercel.app](https://smart-campus-zbhp.vercel.app)
+> **Backend (Render):** [https://smart-campus-k63w.onrender.com](https://smart-campus-k63w.onrender.com)
+
+### 🔑 Test Credentials
+| Role | Email | Password |
+|------|-------|----------|
+| Admin | `admin@testing.com` | `testing` |
+| Student | `user@testing.com` | `testing` |
+
+---
+
 ## ✨ Features
 
-- 🔐 **Role-Based Authentication** - Student, Admin, and Staff access levels
-- 📝 **Smart Issue Reporting** - Report issues with images and auto-location detection
-- 🧠 **Intelligent Severity Detection** - Automatically prioritizes issues based on multiple factors
-- 📊 **Analytics Dashboard** - Real-time insights and visual reports
-- 📍 **Location-Based Grouping** - Efficiently manage issues by building/area
-- 📱 **Responsive Design** - Seamless experience on mobile and desktop
-- 🎨 **Modern UI** - Beautiful gradients, animations, and glass-morphism effects
+- 🔐 **Role-Based Authentication** — Student, Admin, and Staff access levels
+- 📝 **Smart Issue Reporting** — Report issues with images and auto-location detection
+- 🧠 **Intelligent Severity Detection** — Automatically prioritizes issues based on multiple factors
+- 📊 **Analytics Dashboard** — Real-time insights and visual reports
+- 📍 **Location-Based Grouping** — Efficiently manage issues by building/area
+- 🗺️ **Interactive Map View** — View all issues on a live campus map
+- 📱 **Responsive Design** — Seamless experience on mobile and desktop
+- 🎨 **Modern UI** — Beautiful gradients, animations, and glass-morphism effects
+- 📧 **Email Notifications** — Get notified on login and registration via Gmail
 
 ## 🛠️ Tech Stack
 
@@ -20,46 +35,55 @@ A modern, full-stack web application for managing campus facility issues with in
 - React Router
 - Axios
 - Chart.js for analytics
+- Leaflet.js for maps
 
 ### Backend
 - Node.js & Express
-- MongoDB with Mongoose
+- MongoDB Atlas with Mongoose
 - JWT Authentication
-- Multer for file uploads
+- Nodemailer for email notifications
 - Cloudinary for image storage
 
 ## 📁 Project Structure
 
 ```
-Campus issues project/
+smartcampus/
 ├── backend/          # Node.js API server
 ├── frontend/         # React application (Vite)
-├── api/              # Vercel Serverless Function entry point
-├── vercel.json       # Vercel configuration
 └── README.md
 ```
 
 ## 🚀 Deployment
 
-### Deploy to Vercel
+| Service | Platform |
+|---------|----------|
+| Frontend | Vercel (Root Directory: `frontend`) |
+| Backend | Render |
+| Database | MongoDB Atlas |
 
-This project is optimized for Vercel deployment.
+### Environment Variables (Backend)
+```env
+MONGODB_URI=your_mongodb_atlas_uri
+JWT_SECRET=your_jwt_secret
+EMAIL_USER=your_gmail@gmail.com
+EMAIL_PASS=your_gmail_app_password
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+NODE_ENV=production
+PORT=5001
+```
 
-1.  **Push to GitHub**: Ensure your code is in a GitHub repository.
-2.  **Import to Vercel**: Connect your repository to Vercel.
-3.  **Environment Variables**: Add the following in the Vercel Dashboard:
-    - `MONGODB_URI`
-    - `JWT_SECRET`
-    - `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`
-    - `NODE_ENV=production`
-4.  **Deploy**: Vercel will automatically handle the build and routing.
+### Environment Variables (Frontend)
+```env
+VITE_API_URL=https://your-render-backend.onrender.com/api
+```
 
 ## 🚀 Local Quick Start
 
 ### Prerequisites
-- Node.js (v16 or higher)
-- MongoDB Atlas account
-- Cloudinary account (for image uploads)
+- Node.js (v18 or higher)
+- MongoDB (local or Atlas)
 
 ### Backend Setup
 
@@ -75,7 +99,7 @@ npm run dev
 
 ```bash
 cd frontend
-npm install
+npm install --legacy-peer-deps
 npm run dev
 ```
 
@@ -91,46 +115,9 @@ Access the application at `http://localhost:5173`
 
 ### Admins
 - View and manage all issues
-- Assign tasks to maintenance staff
-- Update issue status
-- Access analytics dashboard
+- Update issue status (pending → in-progress → resolved)
+- Access full analytics dashboard
 - Filter by category, severity, location
-
-### Maintenance Staff
-- View assigned tasks
-- Update progress
-- Mark issues as resolved
-
-## 🔧 Configuration
-
-Create `.env` files in both backend and frontend directories:
-
-**Backend (.env)**
-```env
-PORT=5000
-MONGODB_URI=your_mongodb_uri
-JWT_SECRET=your_jwt_secret
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-```
-
-**Frontend (.env)**
-```env
-VITE_API_URL=http://localhost:5000/api
-```
-
-## 📸 Screenshots
-
-Coming soon...
-
-## 🎯 Future Enhancements
-
-- Real-time notifications
-- Email alerts
-- Mobile app (React Native)
-- Advanced analytics with ML predictions
-- Multi-language support
 
 ## 📄 License
 
@@ -138,5 +125,5 @@ MIT
 
 ## 👨‍💻 Developer
 
-**Suryansh Agrawal**  
+**Suryansh Agrawal**
 Built with ❤️ for making campus life better
